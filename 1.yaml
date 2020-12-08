@@ -1,28 +1,15 @@
 security:
-    encoders:
-        App\Entity\User:
-            algorithm: auto
-    
-        my_encoder:
-            algorithm: auto
-            cost: 13
-
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        # used to reload user from session & other features (e.g. switch_user)
-        app_user_provider:
-            entity:
-                class: App\Entity\User
-                property: username
+        users_in_memory: { memory: null }
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
-            #security: false
-            security: true
+            security: false
         main:
             #anonymous: true
             lazy: true
-            provider: app_user_provider
+            provider: users_in_memory
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -32,7 +19,9 @@ security:
             #enable_authenticator_manager: true
             custom_authenticators:
                 - App\Security\LoginFormAuthentificator
+
     enable_authenticator_manager: true
+
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
